@@ -4,6 +4,9 @@ const cors = require("cors");
 const path = require("path");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
+const sessionRoutes = require("./routes/sessionRoutes");
+const questionRoutes = require("./routes/questionRoutes");
+const aiRoutes = require("./routes/aiRoutes");
 
 const app = express();
 
@@ -11,7 +14,7 @@ const app = express();
 app.use(
   cors({
     origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
@@ -23,7 +26,10 @@ connectDB();
 app.use(express.json());
 
 // Routes
-app.use("api/auth", authRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/sessions", sessionRoutes);
+app.use("/api/questions", questionRoutes);
+app.use("/api/ai", aiRoutes);
 
 // Server Uploads Folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads"), {}));
