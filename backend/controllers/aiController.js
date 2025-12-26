@@ -42,10 +42,11 @@ const generateQuestions = async (req, res) => {
         );
 
         // Call Google Generative AI
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        const result = await model.generateContent(prompt);
-        const response = result.response;
-        const text = response.text();
+        const result = await genAI.models.generateContent({
+            model: "gemini-2.0-flash-exp",
+            contents: prompt,
+        });
+        const text = result.text;
 
         // Parse the JSON response
         let questions;
@@ -126,10 +127,11 @@ const getAnswer = async (req, res) => {
         );
 
         // Call Google Generative AI
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        const result = await model.generateContent(prompt);
-        const response = result.response;
-        const answer = response.text();
+        const result = await genAI.models.generateContent({
+            model: "gemini-2.0-flash-exp",
+            contents: prompt,
+        });
+        const answer = result.text;
 
         // Update question with the generated answer
         question.answer = answer;
